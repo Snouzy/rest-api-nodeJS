@@ -17,11 +17,8 @@ db.connect(err => {
   if (err) console.log(err.message);
   else {
     console.log('Connected.');
-
     const app = express();
-
     let MembersRouter = express.Router();
-
     app.use(morgan('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,15 +28,8 @@ db.connect(err => {
       // Récupère un membre avec son ID
       .get((req, res) => {
         db.query('SELECT * FROM members WHERE id = ?', [req.params.id], (err, result) => {
-          if (err) {
-            res.json(error(err.message));
-          } else {
-            if (result[0] != undefined) {
-              res.json(success(result[0]));
-            } else {
-              res.json(error('Wrong id'));
-            }
-          }
+          if (err) res.json(error(err.message));
+          else result[0] != undefined ? res.json(success(result[0])) : res.json(error('Wrong id'));
         });
       })
 
@@ -47,43 +37,31 @@ db.connect(err => {
       .put((req, res) => {
         if (req.body.name) {
           db.query('SELECT * FROM members WHERE id = ?', [req.params.id], (err, result) => {
-            if (err) {
-              res.json(error(err.message));
-            } else {
+            if (err) res.json(error(err.message));
+            else {
               if (result[0] != undefined) {
                 db.query('SELECT * FROM members WHERE name = ? AND id != ?', [req.body.name, req.params.id], (err, result) => {
-                  if (err) {
-                    res.json(error(err.message));
-                  } else {
-                    if (result[0] != undefined) {
-                      res.json(error('same name'));
-                    } else {
+                  if (err) res.json(error(err.message));
+                  else {
+                    if (result[0] != undefined) res.json(error('same name'));
+                    else {
                       db.query('UPDATE members SET name = ? WHERE id = ?', [req.body.name, req.params.id], (err, result) => {
-                        if (err) {
-                          res.json(error(err.message));
-                        } else {
-                          res.json(success(true));
-                        }
+                        err ? res.json(error(err.message)) : res.json(success(true));
                       });
                     }
                   }
                 });
-              } else {
-                res.json(error('Wrong id'));
-              }
+              } else res.json(error('Wrong id'));
             }
           });
-        } else {
-          res.json(error('no name value'));
-        }
+        } else res.json(error('no name value'));
       })
 
       // Supprime un membre avec ID
       .delete((req, res) => {
         db.query('SELECT * FROM members WHERE id = ?', [req.params.id], (err, result) => {
-          if (err) {
-            res.json(error(err.message));
-          } else {
+          if (err) res.json(error(err.message));
+          else {
             if (result[0] != undefined) {
               db.query('DELETE FROM members WHERE id = ?', [req.params.id], (err, result) => {
                 if (err) {
@@ -92,9 +70,7 @@ db.connect(err => {
                   res.json(success(true));
                 }
               });
-            } else {
-              res.json(error('Wrong id'));
-            }
+            } else res.json(error('Wrong id'));
           }
         });
       });
@@ -111,15 +87,11 @@ db.connect(err => {
               res.json(success(result));
             }
           });
-        } else if (req.query.max != undefined) {
-          res.json(error('Wrong max value'));
-        } else {
+        } else if (req.query.max != undefined) res.json(error('Wrong max value'));
+        else {
           db.query('SELECT * FROM members', (err, result) => {
-            if (err) {
-              res.json(error(err.message));
-            } else {
-              res.json(success(result));
-            }
+            if (err) res.json(error(err.message));
+            else res.json(success(result));
           });
         }
       })
@@ -128,36 +100,29 @@ db.connect(err => {
       .post((req, res) => {
         if (req.body.name) {
           db.query('SELECT * FROM members WHERE name = ?', [req.body.name], (err, result) => {
-            if (err) {
-              res.json(error(err.message));
-            } else {
-              if (result[0] != undefined) {
-                res.json(error('name already taken'));
-              } else {
+            if (err) res.json(error(err.message));
+            else {
+              if (result[0] != undefined) res.json(error('name already taken'));
+              else {
                 db.query('INSERT INTO members(name) VALUES(?)', [req.body.name], (err, result) => {
-                  if (err) {
-                    res.json(error(err.message));
-                  } else {
+                  if (err) res.json(error(err.message));
+                  else {
                     db.query('SELECT * FROM members WHERE name = ?', [req.body.name], (err, result) => {
-                      if (err) {
-                        res.json(error(err.message));
-                      } else {
+                      if (err) res.json(error(err.message));
+                      else
                         res.json(
                           success({
                             id: result[0].id,
                             name: result[0].name
                           })
                         );
-                      }
                     });
                   }
                 });
               }
             }
           });
-        } else {
-          res.json(error('no name value'));
-        }
+        } else res.json(error('no name value'));
       });
 
     app.use(config.rootAPI + 'members', MembersRouter);
