@@ -1,25 +1,24 @@
 require('babel-register');
 const { success, error } = require('./assets/functions');
-const mysql = require('mysql');
+const mysql = require('promise-mysql');
 const bodyParser = require('body-parser');
 const express = require('express');
-const morgan = require('morgan');
+const morgan = require('morgan')('dev');
 const config = require('./assets/config');
 
-const db = mysql.createConnection({
-  host: config.db.post,
-  database: config.db.database,
-  user: config.db.user,
-  password: config.db.password
-});
-
-db.connect(err => {
-  if (err) console.log(err.message);
-  else {
+mysql
+  .createConnection({
+    host: config.db.post,
+    database: config.db.database,
+    user: config.db.user,
+    password: config.db.password
+  })
+  .then(db => {
     console.log('Connected.');
     const app = express();
     let MembersRouter = express.Router();
-    app.use(morgan('dev'));
+    let Members = require('./assets/classes/Members')(db, config);
+    app.use(morgan);
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -128,5 +127,5 @@ db.connect(err => {
     app.use(config.rootAPI + 'members', MembersRouter);
 
     app.listen(config.port, () => console.log('Started on port ' + config.port));
-  }
-});
+  })
+  .catch(err => console.log('Error during the connection', err.message));
