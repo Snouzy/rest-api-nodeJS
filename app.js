@@ -1,16 +1,16 @@
 require('babel-register');
-const { success, error } = require('./functions');
+const { success, error } = require('./assets/functions');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
-const config = require('./config');
+const config = require('./assets/config');
 
 const db = mysql.createConnection({
-  host: 'localhost',
-  database: 'nodejs',
-  user: 'root',
-  password: ''
+  host: config.db.post,
+  database: config.db.database,
+  user: config.db.user,
+  password: config.db.password
 });
 
 db.connect(err => {
