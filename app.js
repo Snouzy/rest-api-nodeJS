@@ -23,39 +23,25 @@ mysql
     app.use(bodyParser.urlencoded({ extended: true }));
 
     MembersRouter.route('/:id')
-
       // Récupère un membre avec son ID
       .get(async (req, res) => {
         let member = await Members.getById(req.params.id);
         res.json(checkAndChange(member));
       })
 
-      // Modifie un membre avec ID
+      // Modifie un membre avec son ID
       .put(async (req, res) => {
         let updateMember = await Members.update(req.params.id, req.body.name);
         res.json(checkAndChange(updateMember));
       })
 
-      // Supprime un membre avec ID
-      .delete((req, res) => {
-        db.query('SELECT * FROM members WHERE id = ?', [req.params.id], (err, result) => {
-          if (err) res.json(error(err.message));
-          else {
-            if (result[0] != undefined) {
-              db.query('DELETE FROM members WHERE id = ?', [req.params.id], (err, result) => {
-                if (err) {
-                  res.json(error(err.message));
-                } else {
-                  res.json(success(true));
-                }
-              });
-            } else res.json(error('Wrong id'));
-          }
-        });
+      // Supprime un membre avec son ID
+      .delete(async (req, res) => {
+        let deleteMember = await Members.delete(req.params.id);
+        res.json(checkAndChange(deleteMember));
       });
 
     MembersRouter.route('/')
-
       // Récupère tous les membres
       .get(async (req, res) => {
         let allMembers = await Members.getAll(req.query.max);

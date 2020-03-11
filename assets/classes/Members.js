@@ -38,7 +38,10 @@ const Members = class {
       }
     });
   }
-
+  /* 
+  =============== 
+  ADD 
+  =============== */
   static add(name) {
     return new Promise(next => {
       if (name && name.trim() != '') {
@@ -60,16 +63,18 @@ const Members = class {
       } else next(new Error('no name value'));
     });
   }
-
+  /* 
+  =============== 
+  UPDATE 
+  =============== */
   static update(id, name) {
     return new Promise(next => {
       if (name && name.trim() != '') {
         name = name.trim();
         db.query('SELECT * FROM members WHERE id = ?', [id])
           .then(result => {
-            if (result[0] != undefined) {
-              return db.query('SELECT * FROM members WHERE name = ? AND id != ?', [name, id]);
-            } else next(new Error('Wrong id'));
+            if (result[0] != undefined) db.query('SELECT * FROM members WHERE name = ? AND id != ?', [name, id]);
+            else next(new Error('Wrong id'));
           })
           .then(result => {
             if (result[0] != undefined) {
@@ -83,6 +88,20 @@ const Members = class {
           })
           .catch(err => next(err));
       }
+    });
+  }
+  /* 
+  =============== 
+  DELETE 
+  =============== */
+  static delete(id) {
+    return new Promise(next => {
+      db.query('SELECT * FROM members WHERE id = ?', [id])
+        .then(result => {
+          if (result[0] != undefined) db.query('DELETE FROM members WHERE id = ?', [id]).then(() => next(true));
+          else next(new Error('Wrong id'));
+        })
+        .catch(err => next(err));
     });
   }
 };
