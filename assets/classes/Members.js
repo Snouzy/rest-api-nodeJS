@@ -60,4 +60,29 @@ const Members = class {
       } else next(new Error('no name value'));
     });
   }
+
+  static update(id, name) {
+    return new Promise(next => {
+      if (name && name.trim() != '') {
+        name = name.trim();
+        db.query('SELECT * FROM members WHERE id = ?', [id])
+          .then(result => {
+            if (result[0] != undefined) {
+              return db.query('SELECT * FROM members WHERE name = ? AND id != ?', [name, id]);
+            } else next(new Error('Wrong id'));
+          })
+          .then(result => {
+            if (result[0] != undefined) {
+              next(new Error('same name'));
+            } else {
+              return db.query('UPDATE members SET name = ? WHERE id = ?', [name, id]);
+            }
+          })
+          .then(() => {
+            next(true);
+          })
+          .catch(err => next(err));
+      }
+    });
+  }
 };
