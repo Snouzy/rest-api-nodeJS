@@ -3,6 +3,7 @@ const { success, error, checkAndChange } = require('./assets/functions');
 const mysql = require('promise-mysql');
 const bodyParser = require('body-parser');
 const express = require('express');
+const expressOasGenerator = require('express-oas-generator');
 const morgan = require('morgan')('dev');
 const config = require('./assets/config');
 
@@ -16,6 +17,7 @@ mysql
   .then(db => {
     console.log('Connected.');
     const app = express();
+    expressOasGenerator.init(app, {}); // pr la doc
     let MembersRouter = express.Router();
     let Members = require('./assets/classes/Members')(db, config);
     app.use(morgan);

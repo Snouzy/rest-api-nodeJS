@@ -1,0 +1,69 @@
+{
+  "info": {
+    "title": "NodeJs_formation",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "[Specification JSON](/api-spec)"
+  },
+  "paths": {
+    "/api/v1/members/{id}": {
+      "get": {
+        "summary": "/api/v1/members/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true
+        }],
+        "responses": {}
+      },
+      "put": {
+        "summary": "/api/v1/members/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true
+        }],
+        "responses": {}
+      },
+      "delete": {
+        "summary": "/api/v1/members/{id}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true
+        }],
+        "responses": {}
+      }
+    },
+    "/api/v1/members": {
+      "get": {
+        "summary": "/api/v1/members",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "summary": "/api/v1/members",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  },
+  "swagger": "2.0"
+}
