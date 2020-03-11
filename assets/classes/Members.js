@@ -44,9 +44,7 @@ const Members = class {
   =============== */
   static add(name) {
     return new Promise(next => {
-      if (name && name.trim() != '') {
-        name = name.trim();
-
+      if (name && name !== '') {
         db.query('SELECT * FROM members WHERE name = ?', [name])
           .then(result => {
             if (result[0] != undefined) next(new Error(config.errors.nameAlreadyTaken));
@@ -54,10 +52,12 @@ const Members = class {
           })
           .then(() => db.query('SELECT * FROM members WHERE name = ?', [name]))
           .then(result => {
-            next({
+            const resOBJ = {
               id: result[0].id,
               name: result[0].name
-            });
+            };
+            console.log(resOBJ);
+            next(resOBJ);
           })
           .catch(err => next(err));
       } else next(new Error(config.errors.noNameValue));
