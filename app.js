@@ -29,6 +29,7 @@ mysql
       // Récupère un membre avec son ID
       .get(async (req, res) => {
         let member = await Members.getById(req.params.id);
+        console.log('hey');
         res.json(checkAndChange(member));
       })
 

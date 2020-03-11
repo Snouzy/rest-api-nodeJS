@@ -16,7 +16,7 @@ const Members = class {
     return new Promise(next => {
       db.query('SELECT * FROM members WHERE id = ?', [id])
         .then(res => {
-          res[0] != undefined ? next(result[0]) : next(new Error(config.errors.wrongID));
+          res[0] != undefined ? next(res[0]) : next(new Error(config.errors.wrongID));
         })
         .catch(err => {
           next(err);
@@ -69,12 +69,16 @@ const Members = class {
   =============== */
   static update(id, name) {
     return new Promise(next => {
-      if (name && name.trim() != '') {
+      if (name != undefined && name.trim() != '') {
         name = name.trim();
         db.query('SELECT * FROM members WHERE id = ?', [id])
           .then(result => {
-            if (result[0] != undefined) db.query('SELECT * FROM members WHERE name = ? AND id != ?', [name, id]);
-            else next(new Error(config.errors.wrongID));
+            console.log(result);
+            if (result[0] != undefined) {
+              return db.query('SELECT * FROM members WHERE name = ? AND id != ?', [name, id]);
+            } else {
+              next(new Error(config.errors.wrongID));
+            }
           })
           .then(result => {
             if (result[0] != undefined) {
@@ -87,6 +91,8 @@ const Members = class {
             next(true);
           })
           .catch(err => next(err));
+      } else {
+        next(new Error('no name value !'));
       }
     });
   }
