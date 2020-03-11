@@ -1,5 +1,5 @@
 require('babel-register');
-const { success, error } = require('./assets/functions');
+const { success, error, checkAndChange } = require('./assets/functions');
 const mysql = require('promise-mysql');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -25,11 +25,9 @@ mysql
     MembersRouter.route('/:id')
 
       // Récupère un membre avec son ID
-      .get((req, res) => {
-        db.query('SELECT * FROM members WHERE id = ?', [req.params.id], (err, result) => {
-          if (err) res.json(error(err.message));
-          else result[0] != undefined ? res.json(success(result[0])) : res.json(error('Wrong id'));
-        });
+      .get(async (req, res) => {
+        let member = await Members.getById(req.params.id);
+        res.json(checkAndChange(member));
       })
 
       // Modifie un membre avec ID
