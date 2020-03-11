@@ -1,16 +1,23 @@
 {
   "info": {
-    "title": "NodeJs_formation",
+    "title": "Members API documentation",
     "version": "1.0.0",
     "license": {
       "name": "ISC"
     },
-    "description": "[Specification JSON](/api-spec)"
+    "description": "API rest pour gérer des utilisateurs"
   },
+  "basePath": "/api/v1//",
+  "host": "localhost:8080",
+  "tags": [{
+    "name": "members",
+    "description": "Méthodes permettant de gérer les utilisateurs"
+  }],
   "paths": {
-    "/api/v1/members/{id}": {
+    "members/{id}": {
       "get": {
-        "summary": "/api/v1/members/{id}",
+        "tags": ["members"],
+        "summary": "members/{id}",
         "consumes": [
           "application/json"
         ],
@@ -22,7 +29,8 @@
         "responses": {}
       },
       "put": {
-        "summary": "/api/v1/members/{id}",
+        "tags": ["members"],
+        "summary": "members/{id}",
         "consumes": [
           "application/json"
         ],
@@ -34,7 +42,8 @@
         "responses": {}
       },
       "delete": {
-        "summary": "/api/v1/members/{id}",
+        "tags": ["members"],
+        "summary": "members/{id}",
         "consumes": [
           "application/json"
         ],
@@ -46,21 +55,31 @@
         "responses": {}
       }
     },
-    "/api/v1/members": {
+    "members": {
       "get": {
-        "summary": "/api/v1/members",
+        "tags": ["members"],
+        "summary": "members",
         "consumes": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "max",
+          "in": "query",
+          "required": false
+        }],
         "responses": {}
       },
       "post": {
-        "summary": "/api/v1/members",
+        "tags": ["members"],
+        "summary": "members",
         "consumes": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "name",
+          "in": "body",
+          "required": true
+        }],
         "responses": {}
       }
     }
