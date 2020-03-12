@@ -3,6 +3,7 @@ require('babel-register');
 const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan')('dev');
+const twig = require('twig');
 
 // Variables globales
 const app = express();
@@ -14,8 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Routes
-app.get('/', (req, res) => {
-  res.send('Okay');
+app.get('/:name', (req, res) => {
+  res.render('index.twig', {
+    name: req.params.name
+  });
 });
 //Lancement de l'application
 app.listen(port, () => console.log('Started at port ' + port));
