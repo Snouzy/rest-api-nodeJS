@@ -38,6 +38,10 @@
           "name": "id",
           "in": "path",
           "required": true
+        }, {
+          "name": "name",
+          "in": "body",
+          "required": true
         }],
         "responses": {}
       },
