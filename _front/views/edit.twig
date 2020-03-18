@@ -14,14 +14,21 @@
     <h1 class="mb-5 text-center">Modification d'un</h1>
 
     <form action="" method="post">
-    {% for index, value in member %}
-      <div class="form-group">
-        <label for="{{ index }}"> {{ index }}</label>
-        <input type="text" class="form-control" id="{{ index }}" name="{{ index }}" value="{{ value }}" {% if index == 'id' %} readonly {% endif %}>
-      </div>
-    {% endfor %}
-  <button type="submit" class="btn btn-primary">Modifier</button>
-</form>
+      {% for index, value in member %}
+        <div class="form-group">
+          <label for="{{ index }}"> {{ index }}</label>
+          <input type="text" class="form-control" id="{{ index }}" name="{{ index }}" value="{{ value }}" {% if index == 'id' %} readonly {% endif %}>
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+
+    <form action="/delete" method="post" class="mt-5">
+          <input type="hidden" class="form-control" id="{{ index }}" name="id" value="{{ member.id }}">
+      <button type="submit" class="btn btn-primary">Supprimer</button>
+    </form>
+    
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

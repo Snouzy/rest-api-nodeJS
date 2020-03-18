@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Page d'accueil
 app.get('/', (req, res) => {
-  res.redirect('/members')
+  res.redirect('/members');
 });
 
 // Page récupérant tous les membres
@@ -36,7 +36,7 @@ app.get('/members', (req, res) => {
 
 // Page récupérant un seul membre
 app.get('/members/:id', (req, res) => {
-  apiCall('/members/' + req.params.id,'get', {}, res, result => {
+  apiCall('/members/' + req.params.id, 'get', {}, res, result => {
     res.render('member.twig', {
       member: result
     });
@@ -53,12 +53,26 @@ app.get('/edit/:id', (req, res) => {
 });
 
 app.post('/edit/:id', (req, res) => {
-  apiCall('/members/' + req.params.id, 'put', {
-    name: req.body.name
-  }, res, () => {
-    res.redirect('/members')
-  })
-})
+  apiCall(
+    '/members/' + req.params.id,
+    'put',
+    {
+      name: req.body.name
+    },
+    res,
+    () => {
+      res.redirect('/members');
+    }
+  );
+});
+
+// Suppression d'un membre
+app.post('/delete', (req, res) => {
+  apiCall('/members/' + req.body.id, 'delete', {}, res, () => {
+    res.redirect('/members');
+  });
+});
+
 //Lancement de l'application
 app.listen(port, () => console.log('Started at port ' + port));
 
