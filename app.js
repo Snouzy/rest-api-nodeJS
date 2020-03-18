@@ -50,6 +50,7 @@ mysql
       .get(async (req, res) => {
         let allMembers = await Members.getAll(req.query.max);
         res.json(checkAndChange(allMembers));
+        console.log(allMembers);
       })
 
       // Ajoute un membre avec son nom
