@@ -9,6 +9,7 @@ Afin d'installer le projet,
 - `npm install` -> `npm start` afin de mettre en route le serveur qui hébergera l'API.
 
 ***A partir de là, vous pouvez déjà vous servir de l'api et avoir les résultats des requêtes (au format JSON) dans le terminal :***
+
 ![members-json-console](https://user-images.githubusercontent.com/32961176/76985681-e2ac7d80-6940-11ea-8771-0688150364f5.JPG)
 
 2. **Rendez-vous dans `_front` puis :**
