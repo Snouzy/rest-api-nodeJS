@@ -7,11 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <title>Modification d'un</title>
+    <title>Modification d'un membre</title>
+    
   </head>
   <body class="p-5">
-    <h1 class="mb-5 text-center">Modification d'un</h1>
+    <h1 class="mb-5 text-center">Modification d'un membre</h1>
 
     <form action="" method="post">
       {% for index, value in member %}
@@ -20,13 +20,21 @@
           <input type="text" class="form-control" id="{{ index }}" name="{{ index }}" value="{{ value }}" {% if index == 'id' %} readonly {% endif %}>
         </div>
       {% endfor %}
-      <button type="submit" class="btn btn-primary">Modifier</button>
+      <button type="submit" class="btn btn-warning">Modifier</button>
     </form>
 
-    <form action="/delete" method="post" class="mt-5">
-          <input type="hidden" class="form-control" id="{{ index }}" name="id" value="{{ member.id }}">
-      <button type="submit" class="btn btn-primary">Supprimer</button>
-    </form>
+  <div class="row">
+    <div class="col-sm-6">
+      <form action="/delete" method="post" class="mt-5">
+            <input type="hidden" class="form-control" id="{{ index }}" name="id" value="{{ member.id }}">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+      </form>
+    </div>
+    <div class="col-sm-6">
+    <a href="/" class="btn btn-dark mt-2">Accueil</a>
+    </div>
+  </div>
+   
     
     
     <!-- Optional JavaScript -->

@@ -73,6 +73,16 @@ app.post('/delete', (req, res) => {
   });
 });
 
+// Ajouter un membre
+app.get('/insert', (req, res) => {
+  res.render('insert.twig');
+});
+// Méthode permettant d'ajouter un membre
+app.post('/insert', (req, res) => {
+  apiCall('/members', 'post', { name: req.body.name }, res, () => {
+    res.redirect('/members');
+  });
+});
 //Lancement de l'application
 app.listen(port, () => console.log('Started at port ' + port));
 
