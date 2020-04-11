@@ -2,6 +2,14 @@
 # rest-api-nodeJS
 Une API gérant des membres afin de performer avec **nodeJS** & **Twig**.
 
+# Documentation :
+### Vous pouvez accéder à la document via le module Swagger à l'intérieur du projet et par :
+**`http://localhost:8080/api/v1/api-docs/`**
+
+
+### Sinon, une version **en ligne** est disponible à l'adresse suivante :
+[**snouzy-members-api.gitbook.io**](https://snouzy-members-api.gitbook.io/snouzy-rest-members-api/)
+
 # Installation
 Afin d'installer le projet, 
 1. **Rendez-vous à la racine du projet puis :**
@@ -18,11 +26,5 @@ Afin d'installer le projet,
 
 # Démonstration
 ![demo-min](https://user-images.githubusercontent.com/32961176/76993337-f65de100-694c-11ea-9efe-0c023d39c62e.gif)
-# Documentation :
-### Vous pouvez accéder à la document via le module Swagger à l'intérieur du projet et par :
-**`http://localhost:8080/api/v1/api-docs/`**
 
-
-### Sinon, une version **en ligne** est disponible à l'adresse suivante :
-[**snouzy-members-api.gitbook.io**](https://snouzy-members-api.gitbook.io/snouzy-rest-members-api/)
 
